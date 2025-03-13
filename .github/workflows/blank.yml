@@ -96,7 +96,7 @@ jobs:
         run: cmake --build /opt/azerothcore/build --config ${{ matrix.build_type }}
 
       - name: Install
-        run: cmake --install build --config ${{ matrix.build_type }}
+        run: cmake --install build --prefix /opt/azerothcore/build --config ${{ matrix.build_type }}
         
       - name: Upload AzerothCore
         uses: actions/upload-artifact@v4
