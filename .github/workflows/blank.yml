@@ -93,7 +93,7 @@ jobs:
           -S ${{ github.workspace }}
 
       - name: Build
-        run: cmake --build ${{ github.workspace }}/build --config ${{ matrix.build_type }}
+        run: cmake --build /opt/azerothcore/build --config ${{ matrix.build_type }}
 
       - name: Install
         run: cmake --install build --config ${{ matrix.build_type }}
