@@ -54,16 +54,13 @@ jobs:
         with:
           repository: 'azerothcore/mod-npc-enchanter'
           path: 'modules/mod-npc-enchanter'           
-          
       - name: Checkout Playerbot Module
         uses: actions/checkout@v3
         with:
           repository: 'liyunfan1223/mod-playerbots'
           path: 'modules/mod-playerbots'
-		  
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1.2.13
-		
       - name: Configure OS
         shell: bash
         env:
@@ -75,7 +72,6 @@ jobs:
         run: |
           export CTOOLS_BUILD=all
           ./acore.sh compiler build
-		  
       - name: Upload AzerothCore
         uses: actions/upload-artifact@v4
         with:
