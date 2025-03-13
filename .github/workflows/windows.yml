@@ -76,7 +76,7 @@ jobs:
           export CTOOLS_BUILD=all
           ./acore.sh compiler build
 		  
-	  - name: Upload AzerothCore
+      - name: Upload AzerothCore
         uses: actions/upload-artifact@v4
         with:
           name: AzerothCore-build
