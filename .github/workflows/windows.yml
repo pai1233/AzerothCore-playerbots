@@ -65,8 +65,7 @@ jobs:
         shell: bash
         env:
           CONTINUOUS_INTEGRATION: true
-        run: |
-          ./acore.sh install-deps
+        run: ./acore.sh install-deps
       - name: Build
         shell: bash
         run: |
