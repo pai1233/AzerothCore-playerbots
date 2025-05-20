@@ -46,7 +46,7 @@ jobs:
       - name: Checkout boss-announcer Module
         uses: actions/checkout@v3
         with:
-          repository: 'azerothcore/mod-boss-announcer'
+          repository: 'azerothcore/mod-boss-announcer' 
           path: 'modules/mod-boss-announcer'  
           
       - name: Checkout npc-enchanter Module
