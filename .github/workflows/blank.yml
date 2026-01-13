@@ -80,7 +80,10 @@ jobs:
             ccache:${{ matrix.os }}
 
       - name: Install Requirements
-        run: sudo apt-get update && sudo apt-get install ccache git cmake make gcc g++ clang libmysqlclient-dev libssl-dev libbz2-dev libreadline-dev libncurses-dev mysql-server libboost-all-dev
+        run: sudo apt-get update && sudo apt-get install -y ccache git cmake make gcc g++ 
+             clang libmysqlclient-dev libssl-dev libbz2-dev libreadline-dev libreadline6-dev libncurses-dev 
+             libncurses5-dev mysql-server libboost-all-dev libmysql++-dev libtool openssl zlib1g-dev build-essential 
+             cmake-data google-perftools curl unzip
 
       - name: Configure CMake
         run: >
@@ -90,6 +93,13 @@ jobs:
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DSCRIPTS="static" 
+          -DMODULES="static" 
+          -DCMAKE_CXX_COMPILER_LAUNCHER="ccache" 
+          -DCMAKE_C_COMPILER_LAUNCHER="ccache" 
+          -DCMAKE_C_FLAGS="-Werror" 
+          -DCMAKE_CXX_FLAGS="-Werror" 
+          -DLUA_VERSION=lua54
           -S ${{ github.workspace }}
 
       - name: Build
