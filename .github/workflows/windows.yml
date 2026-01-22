@@ -59,6 +59,27 @@ jobs:
         with:
           repository: 'liyunfan1223/mod-playerbots'
           path: 'modules/mod-playerbots'
+
+      - name: Checkout vcpkg
+        uses: actions/checkout@v3
+        with:
+          repository: microsoft/vcpkg
+          path: vcpkg
+      
+      - name: Bootstrap vcpkg and install Lua
+        shell: pwsh
+        run: |
+          # Bootstrap vcpkg (builds vcpkg.exe)
+          ./vcpkg/bootstrap-vcpkg.bat
+      
+          # Install Lua 5.3 for x64 Windows
+          ./vcpkg/vcpkg install lua:x64-windows
+      
+          # Patch functions.sh to inject vcpkg toolchain
+          $content = Get-Content -Path "apps/compiler/includes/functions.sh" -Raw
+          $updated = $content -replace 'cmake \$SRCPATH ', 'cmake -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake $SRCPATH '
+          Set-Content -Path "apps/compiler/includes/functions.sh" -Value $updated
+          
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1.2.13
       - name: Configure OS
