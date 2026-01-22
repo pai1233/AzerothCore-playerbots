@@ -72,8 +72,8 @@ jobs:
           # Bootstrap vcpkg (builds vcpkg.exe)
           ./vcpkg/bootstrap-vcpkg.bat
       
-          # Install Lua 5.3 for x64 Windows
-          ./vcpkg/vcpkg install lua:x64-windows
+          # Install Lua 5.4 for x64 Windows
+          ./vcpkg/vcpkg install lua54:x64-windows
       
           # Patch functions.sh to inject vcpkg toolchain
           $content = Get-Content -Path "apps/compiler/includes/functions.sh" -Raw
