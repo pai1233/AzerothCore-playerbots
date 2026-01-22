@@ -18,10 +18,11 @@ jobs:
       matrix:
         # the result of the matrix will be the combination of all attributes, so we get os*compiler builds
         include:
-          - os: ubuntu-22.04
-            c_compiler: clang
-            cpp_compiler: clang++
+          - os: ubuntu-24.04
+            c_compiler: clang-18
+            cpp_compiler: clang++-18
             build_type: Release
+            build_model: static
             
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }}-${{ matrix.cpp_compiler }}
@@ -82,10 +83,10 @@ jobs:
             ccache:${{ matrix.os }}
 
       - name: Install Requirements
-        run: sudo apt-get update && sudo apt-get install -y ccache git cmake make gcc g++ 
-             clang libmysqlclient-dev libssl-dev libbz2-dev libreadline-dev libreadline6-dev libncurses-dev 
-             libncurses5-dev mysql-server libboost-all-dev libmysql++-dev libtool openssl zlib1g-dev build-essential 
-             cmake-data google-perftools curl unzip
+        run: sudo apt-get update && sudo apt-get -y install ccache clang cmake curl google-perftools \
+            libmysqlclient-dev make unzip build-essential cmake-data \
+            libboost-all-dev libbz2-dev libncurses5-dev libmysql++-dev \
+            libreadline6-dev libssl-dev libtool openssl zlib1g-dev
 
       - name: Configure CMake
         run: >
@@ -95,8 +96,8 @@ jobs:
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-          -DSCRIPTS="static" 
-          -DMODULES="static" 
+          -DSCRIPTS=${{matrix.build_model}}
+          -DMODULES=${{matrix.build_model}}
           -DCMAKE_CXX_COMPILER_LAUNCHER="ccache" 
           -DCMAKE_C_COMPILER_LAUNCHER="ccache" 
           -DCMAKE_C_FLAGS="-Werror -I/usr/include/lua5.4" 
